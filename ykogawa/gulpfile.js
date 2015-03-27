@@ -8,7 +8,10 @@ var runSequence = require('run-sequence');
 var dev_dir = 'src/';
 
 gulp.task('scss',function(){
-  return gulp.src('src/sass/**/*.scss')
+  return gulp.src(dev_dir+'sass/**/*.scss')
+    .pipe($.plumber({
+      errorHandler: $.notify.onError("Error: <%= error.message %>") //<-
+    }))
     .pipe($.sass({
       style: 'expanded'
     }))
@@ -18,11 +21,9 @@ gulp.task('scss',function(){
 
 gulp.task('watch',function(){
   browserSync.init({
-    proxy: 'http://environment.yk/',
-/*    server:{
+    server:{
       baseDir: ['src'],
-    },*/
-    notify: false
+    }
   });
 
   gulp.watch([dev_dir+'sass/**/*.scss'], ['scss']);
