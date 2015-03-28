@@ -7,5 +7,6 @@
 .test {
 	transform: scale(1);
 	background-size: cover;
+	-webkit-background-size: cover;
 	display: flex;
 }

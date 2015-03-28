@@ -9,10 +9,11 @@ var setting = {
   autoprefixer: {
       browser: ['last 2 version', 'ie 9', 'ie 8', 'Android 4.0', 'Android 2.3']
   },
-  sass: {
-    option: {
-      style: 'expanded'
-    }
+  browserSync: {
+    server:{
+        baseDir: 'httpdocs',
+    },
+    // proxy: 'domain.ab'
   },
   path: {
     base: {
@@ -65,7 +66,7 @@ gulp.task('scss',function(){
     .pipe($.plumber({
       errorHandler: $.notify.onError("Error: <%= error.message %>") //<-
     }))
-    .pipe($.sass(setting.sass.option))
+    .pipe($.sass())
     .pipe($.autoprefixer(setting.autoprefixer.browser))
     .pipe(gulp.dest(setting.path.sass.dest))
     .pipe(browserSync.reload({stream: true}));
@@ -85,11 +86,10 @@ gulp.task('html', function(){
 // JavaScript
 gulp.task('js', function(){
   return gulp.src(
-    setting.path.js.src,
-    {base: setting.path.base.src}
+    setting.path.js.src
   )
-  .pipe($.changed(setting.path.base.dest))
-  .pipe(gulp.dest(setting.path.base.dest))
+  .pipe($.changed(setting.path.js.dest))
+  .pipe(gulp.dest(setting.path.js.dest))
   .pipe(browserSync.reload({stream: true}));
 });
 
@@ -103,23 +103,36 @@ gulp.task('etc', function(){
   .pipe(browserSync.reload({stream: true}));
 });
 
+// Minify
+gulp.task('minify', function(){
+  gulp.src(setting.path.js.dest+'**/*.js')
+    .pipe($.uglify())
+    .pipe(gulp.dest(setting.path.js.dest));
+
+  gulp.src(setting.path.sass.dest+'**/*.css')
+    .pipe($.minifyCss())
+    .pipe(gulp.dest(setting.path.sass.dest));
+
+});
+
 // Clean
 gulp.task('clean', del.bind(null, setting.path.base.dest));
 
 // Build
 gulp.task('build', function(){
-  return runSequence('clean', ['html', 'js', 'scss', 'etc'], 'imagemin');
+  return runSequence(
+    'clean',
+    ['html', 'js', 'scss', 'etc'],
+    ['imagemin', 'minify']
+    );
 });
 
 // Watch
 gulp.task('watch', function(){
-  browserSync.init({
-    server:{
-      baseDir: [setting.path.base.dest],
-    }
-  });
+  browserSync.init(setting.browserSync);
 
   gulp.watch([setting.path.html.src], ['html']);
+  gulp.watch([setting.path.js.src], ['js']);
   gulp.watch([setting.path.sass.src], ['scss']);
   gulp.watch([setting.path.image.src], ['imagemin']);
 });
