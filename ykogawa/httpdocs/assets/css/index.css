@@ -1,0 +1,13 @@
+@charset "UTF-8";
+/*------------------------------------------------------------
+	トップページ
+------------------------------------------------------------*/
+.test {
+  -webkit-transform: scale(1);
+      -ms-transform: scale(1);
+          transform: scale(1);
+  background-size: cover;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex; }

@@ -1,0 +1,227 @@
+@charset "UTF-8";
+/*------------------------------------------------------------
+	デフォルトスタイル
+------------------------------------------------------------*/
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, dialog, figure, footer, header, hgroup, menu, nav, section, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-size: 1em; }
+
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, main {
+  display: block; }
+
+html {
+  font-size: 62.5%; }
+
+body, table, input, textarea, select, option, h1, h2, h3, h4, h5, h6 {
+  font-family: 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;
+  line-height: 1.1; }
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: bold; }
+
+table, input, textarea, select, option {
+  line-height: 1.1; }
+
+ol, ul {
+  list-style: none; }
+
+blockquote, q {
+  quotes: none; }
+
+:focus {
+  outline: 0; }
+
+ins {
+  text-decoration: none; }
+
+del {
+  text-decoration: line-through; }
+
+img {
+  vertical-align: top; }
+
+/*------------------------------------------------------------
+	書式設定
+------------------------------------------------------------*/
+/* テキストの位置 */
+.taLeft {
+  text-align: left !important; }
+
+.taCenter {
+  text-align: center !important; }
+
+.taRight {
+  text-align: right !important; }
+
+.vTop {
+  vertical-align: top !important; }
+
+.vMiddle {
+  vertical-align: middle !important; }
+
+/* フォントの太さ */
+.fwNormal {
+  font-weight: normal !important; }
+
+.fwBold {
+  font-weight: bold !important; }
+
+/*------------------------------------------------------------
+	微調整用クラス（※多用しないこと）
+------------------------------------------------------------*/
+.mt0 {
+  margin-top: 0 !important; }
+
+.mb0 {
+  margin-bottom: 0 !important; }
+
+/*------------------------------------------------------------
+	clearfix（float解除）
+------------------------------------------------------------*/
+.clearfix {
+  *zoom: 1; }
+  .clearfix:after {
+    display: block;
+    clear: both;
+    content: ""; }
+
+/*------------------------------------------------------------
+	トラッキングタグの余計なスペースを削除
+------------------------------------------------------------*/
+.trackTags {
+  display: none; }
+
+/*------------------------------------------------------------
+	レイアウト
+------------------------------------------------------------*/
+body {
+  min-width: 800px;
+  /* ウインドウ幅で横スクロール時に背景が切れるバグ対策でコンテンツと同じ幅を指定 */
+  line-height: 1.5;
+  text-align: center; }
+
+#container {
+  margin: 0 auto;
+  width: 800px;
+  background-color: #fff;
+  text-align: left; }
+
+#main {
+  margin-bottom: 10px;
+  font-size: 140%; }
+  #main:after {
+    display: block;
+    clear: both;
+    content: ""; }
+
+/*------------------------------------------------------------
+	ヘッダー
+------------------------------------------------------------*/
+#header {
+  margin-bottom: 10px;
+  padding: 5px 10px 10px;
+  background-color: #efefef;
+  position: relative; }
+  #header h1 {
+    margin: 0 150px 5px 0;
+    font-size: 110%;
+    font-weight: normal; }
+  #header .logo {
+    width: 200px;
+    height: 50px;
+    background-color: #ccc;
+    float: left; }
+  #header .banner {
+    width: 250px;
+    height: 50px;
+    background-color: #ccc;
+    float: right; }
+  #header .otherNavi {
+    position: absolute;
+    top: 5px;
+    right: 10px; }
+    #header .otherNavi li {
+      display: inline; }
+      #header .otherNavi li.contact {
+        margin-right: 2px;
+        padding-right: 5px;
+        border-right: 1px solid #666; }
+
+/*------------------------------------------------------------
+	グローバルナビ
+------------------------------------------------------------*/
+#gNavi {
+  margin-bottom: 10px; }
+  #gNavi li {
+    width: 160px;
+    background-color: #efefef;
+    float: left; }
+    #gNavi li a {
+      padding: 10px 0;
+      display: block;
+      text-decoration: none;
+      text-align: center; }
+
+/*------------------------------------------------------------
+	パンクズリスト
+------------------------------------------------------------*/
+#pagePath {
+  margin-bottom: 10px; }
+  #pagePath li {
+    margin-right: 2px;
+    display: inline; }
+    #pagePath li a {
+      margin-right: 5px; }
+
+/*------------------------------------------------------------
+	コンテンツ
+------------------------------------------------------------*/
+#conts {
+  width: 580px;
+  float: left; }
+
+/*------------------------------------------------------------
+	サイドバー
+------------------------------------------------------------*/
+#sideBar {
+  padding: 50px 0;
+  width: 200px;
+  background-color: #efefef;
+  float: right; }
+
+/*------------------------------------------------------------
+	フッター
+------------------------------------------------------------*/
+#footer {
+  padding: 10px 10px 5px;
+  background-color: #efefef; }
+  #footer .subNavi {
+    font-size: 120%;
+    text-align: center; }
+    #footer .subNavi li {
+      margin-right: 2px;
+      padding-right: 5px;
+      border-right: 1px solid #666;
+      display: inline; }
+    #footer .subNavi .lastChild {
+      margin: 0;
+      padding: 0;
+      border-right: none; }
+  #footer .copyright {
+    display: block;
+    font-size: 110%;
+    text-align: right;
+    font-style: normal; }
+
+/*------------------------------------------------------------
+	見出し
+------------------------------------------------------------*/
+/*------------------------------------------------------------
+	ボタン
+------------------------------------------------------------*/
+/*------------------------------------------------------------
+	箇条書き
+------------------------------------------------------------*/

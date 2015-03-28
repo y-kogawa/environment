@@ -1,0 +1,11 @@
+@charset "UTF-8";
+@import "vars";	// 変数
+@import "functions"; // 関数等
+/*------------------------------------------------------------
+	トップページ
+------------------------------------------------------------*/
+.test {
+	transform: scale(1);
+	background-size: cover;
+	display: flex;
+}
