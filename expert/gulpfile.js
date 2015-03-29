@@ -9,10 +9,15 @@ var setting = {
       browser: ['last 2 version', 'ie 9', 'ie 8', 'Android 4.0', 'Android 2.3']
   },
   browserSync: {
+    // 使わない方はコメントアウトする
+    // proxy: 'environment.yk',
     server:{
         baseDir: 'httpdocs',
     },
-    // proxy: 'environment.yk'
+  },
+  imagemin: {
+    disabled: false,  // falseでimageminを実行
+    level: 7
   },
   path: {
     base: {
@@ -48,23 +53,24 @@ var setting = {
       dest: 'httpdocs/assets/etc/',
     },
     html: {
-      src: ['src/**/*.html', 'src/**/*.php', 'src/**/*.xml'],
-      dest: 'httpdocs/',
+      src: ['src/**/*', '!src/assets/**/*']
     },
   }
 }
 
 // 画像の圧縮
 gulp.task('imagemin', function(){
-  var imageminOptions = {
-    optimizationLevel: 7
-  };
+  if(!setting.imagemin.disabled){
+    var imageminOptions = {
+      optimizationLevel: setting.imagemin.lebel
+    };
 
-  gulp.src(setting.path.image.src)
-    .pipe($.changed(setting.path.image.dest))
-    .pipe($.imagemin(imageminOptions))
-    .pipe(gulp.dest(setting.path.image.dest))
-    .pipe(browserSync.reload({stream: true}));
+    gulp.src(setting.path.image.src)
+      .pipe($.changed(setting.path.image.dest))
+      .pipe($.imagemin(imageminOptions))
+      .pipe(gulp.dest(setting.path.image.dest))
+      .pipe(browserSync.reload({stream: true}));
+  }
 });
 
 // SASS
