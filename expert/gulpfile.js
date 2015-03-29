@@ -1,7 +1,6 @@
 var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
 var browserSync = require('browser-sync');
-var rimraf = require('rimraf');
 var runSequence = require('run-sequence');
 var del = require('del');
 
@@ -13,7 +12,7 @@ var setting = {
     server:{
         baseDir: 'httpdocs',
     },
-    // proxy: 'domain.ab'
+    // proxy: 'environment.yk'
   },
   path: {
     base: {
@@ -36,13 +35,21 @@ var setting = {
       src: 'src/assets/js/**/*',
       dest: 'httpdocs/assets/js/'
     },
-    html: {
-      src: ['src/**/*.html', 'src/**/*.php'],
-      dest: 'httpdocs/',
+    lib: {
+      src: 'src/assets/lib/**/*',
+      dest: 'httpdocs/assets/lib/',
+    },
+    include: {
+      src: 'src/assets/include/**/*',
+      dest: 'httpdocs/assets/include/',
     },
     etc: {
       src: 'src/assets/etc/**/*',
       dest: 'httpdocs/assets/etc/',
+    },
+    html: {
+      src: ['src/**/*.html', 'src/**/*.php', 'src/**/*.xml'],
+      dest: 'httpdocs/',
     },
   }
 }
@@ -93,6 +100,26 @@ gulp.task('js', function(){
   .pipe(browserSync.reload({stream: true}));
 });
 
+// Lib
+gulp.task('lib', function(){
+  return gulp.src(
+    setting.path.lib.src
+  )
+  .pipe($.changed(setting.path.lib.dest))
+  .pipe(gulp.dest(setting.path.lib.dest))
+  .pipe(browserSync.reload({stream: true}));
+});
+
+// Include
+gulp.task('include', function(){
+  return gulp.src(
+    setting.path.include.src
+  )
+  .pipe($.changed(setting.path.include.dest))
+  .pipe(gulp.dest(setting.path.include.dest))
+  .pipe(browserSync.reload({stream: true}));
+});
+
 // Etc
 gulp.task('etc', function(){
   return gulp.src(
@@ -122,7 +149,7 @@ gulp.task('clean', del.bind(null, setting.path.base.dest));
 gulp.task('build', function(){
   return runSequence(
     'clean',
-    ['html', 'js', 'scss', 'etc'],
+    ['html', 'js', 'scss', 'lib', 'include', 'etc'],
     ['imagemin', 'minify']
     );
 });
@@ -131,9 +158,12 @@ gulp.task('build', function(){
 gulp.task('watch', function(){
   browserSync.init(setting.browserSync);
 
-  gulp.watch([setting.path.html.src], ['html']);
-  gulp.watch([setting.path.js.src], ['js']);
   gulp.watch([setting.path.sass.src], ['scss']);
+  gulp.watch([setting.path.js.src], ['js']);
+  gulp.watch([setting.path.lib.src], ['lib']);
+  gulp.watch([setting.path.include.src], ['include']);
+  gulp.watch([setting.path.etc.src], ['etc']);
+  gulp.watch([setting.path.html.src], ['html']);
   gulp.watch([setting.path.image.src], ['imagemin']);
 });
 

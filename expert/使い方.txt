@@ -1,0 +1,43 @@
+■使い方
+全てコマンドプロンプトから実行します。
+package.jsonがあるフォルダで[「]Shift+右クリック]→[コマンドウィンドウでここを開く]を選択してコマンドプロンプトを開いてください。
+
+１．モジュールのインストール
+npm install と打って実行。
+
+２．コマンド
+gulp build: srcフォルダを元にコンパイルしたファイルをhttpdocsフォルダに出力する。
+　　　　　　　　　　すでにhttpdocsがある場合は一度削除するため、httpdocsに直接ファイルを置かないように気をつける。
+　　　　　　　　　　jsとcssをミニファイするため、サーバにアップする前に使用する。
+
+gulp      : httpdocsフォルダをルートにWebサーバを立ち上げる。
+　　　　　　　　　　ローカルとイントラネット内で確認できるAccess URLsを発行してくれる。
+　　　　　　　　　　PHPを使用する場合は、setting.browserSync.serverをコメントアウトし、
+　　　　　　　　　　setting.browserSync.proxyにxamppで作成したローカルテスト環境のドメインを指定する。
+
+■主な機能
+gulp-browserSync: gulpコマンドで立ち上げたWebサーバへのAccess URLにアクセスしているブラウザの挙動（スクロールやリロードなど）を同期する。
+　　　　　　　　　　　　　　 xxx:3001 にアクセスすることで同期する挙動の制御などができる。
+
+gulp-sass        : scssファイルのコンパイル
+gulp-imagemin    : 画像ファイルの圧縮
+gulp-autoprefixer: ベンダープレフィックスの付与
+gulp-minify-css  : CSSファイルのミニファイ
+gulp-uglify      : JSファイルのミニファイ
+
+■ディレクトリルール
+src     : 開発用のデータを入れるフォルダ。このフォルダに全てのデータを格納するようにする。
+httpdocs: 開発用のデータをコンパイルしたデータを出力するフォルダ。Webサーバで確認するときのルートフォルダになる。
+
+src
+┣assets
+┃┠img     - jpg|png|gif|svg
+┃┠sass    - scss
+┃┠js      - js
+┃┠lib     - jQuery Pluginなど
+┃┠include - includeするファイル
+┃┗etc     - 上記に含まれないもの全て
+┠sitemap.xml
+┗index.html|.php
+※外部ファイルは全てassetsフォルダに入れる
+※上記のフォルダ以外のフォルダにJavaScriptや画像を入れてもhttpdocsに出力されません。
