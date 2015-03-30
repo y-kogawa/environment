@@ -143,7 +143,7 @@ gulp.task('minify', function(){
     .pipe(gulp.dest(setting.path.js.dest));
 
   gulp.src(setting.path.sass.dest+'**/*.css')
-    .pipe($.minifyCss())
+    .pipe($.csso())
     .pipe(gulp.dest(setting.path.sass.dest));
 
 });
