@@ -16,8 +16,18 @@ var setting = {
     },
   },
   imagemin: {
-    disabled: false,  // falseでimageminを実行
-    level: 7
+    disabled: true,  // falseでimageminを実行
+    level: 7  // 圧縮率
+  },
+  // css、jsのミニファイの有効化/無効化
+  minify: {
+    css: false,
+    js: false
+  },
+  cssbeautify: {
+    options: {
+      indent: '	'
+    }
   },
   path: {
     base: {
@@ -56,7 +66,7 @@ var setting = {
       src: ['src/**/*', '!src/assets/**/*']
     },
   }
-}
+};
 
 // 画像の圧縮
 gulp.task('imagemin', function(){
@@ -65,9 +75,16 @@ gulp.task('imagemin', function(){
       optimizationLevel: setting.imagemin.lebel
     };
 
-    gulp.src(setting.path.image.src)
+    return gulp.src(setting.path.image.src)
       .pipe($.changed(setting.path.image.dest))
       .pipe($.imagemin(imageminOptions))
+      .pipe(gulp.dest(setting.path.image.dest))
+      .pipe(browserSync.reload({stream: true}));
+  }else{
+    return gulp.src(
+        setting.path.image.src
+      )
+      .pipe($.changed(setting.path.image.dest))
       .pipe(gulp.dest(setting.path.image.dest))
       .pipe(browserSync.reload({stream: true}));
   }
@@ -138,14 +155,21 @@ gulp.task('etc', function(){
 
 // Minify
 gulp.task('minify', function(){
-  gulp.src(setting.path.js.dest+'**/*.js')
-    .pipe($.uglify())
-    .pipe(gulp.dest(setting.path.js.dest));
+  if(setting.minify.js){
+    return gulp.src(setting.path.js.dest+'**/*.js')
+      .pipe($.uglify())
+      .pipe(gulp.dest(setting.path.js.dest));
+  }
 
-  gulp.src(setting.path.sass.dest+'**/*.css')
-    .pipe($.csso())
-    .pipe(gulp.dest(setting.path.sass.dest));
-
+  if(setting.minify.css){
+    return gulp.src(setting.path.sass.dest+'**/*.css')
+      .pipe($.csso())
+      .pipe(gulp.dest(setting.path.sass.dest));
+  }else{
+    return gulp.src(setting.path.sass.dest+'**/*.css')
+      .pipe($.cssbeautify(setting.cssbeautify.options))
+      .pipe(gulp.dest(setting.path.sass.dest));
+  }
 });
 
 // Clean
