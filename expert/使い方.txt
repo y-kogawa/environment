@@ -43,7 +43,7 @@ src
 ┃┠img     - jpg|png|gif|svg
 ┃┠sass    - scss
 ┃┠js      - js
-┃┠lib     - jQuery Pluginなど
+┃┠lib     - js単体ファイルでは済まずcssやimgをが含まれているjQuery Pluginなど
 ┃┠include - includeするファイル
 ┃┗etc     - 上記に含まれないもの全て
 ┠sitemap.xml
