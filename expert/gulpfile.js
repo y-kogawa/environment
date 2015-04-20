@@ -6,7 +6,7 @@ var del = require('del');
 
 var setting = {
   autoprefixer: {
-      browser: ['last 2 version', 'ie 9', 'ie 8', 'Android 4.0', 'Android 2.3']
+      browser: ['last 2 version', 'Explorer >= 8', 'Android >= 4', 'Android 2.3']
   },
   browserSync: {
     // 使わない方はコメントアウトする
@@ -25,9 +25,13 @@ var setting = {
     js: false
   },
   cssbeautify: {
+    disabled: true,
     options: {
       indent: '	'
     }
+  },
+  csscomb: {
+    disabled: true,
   },
   path: {
     base: {
@@ -153,21 +157,38 @@ gulp.task('etc', function(){
   .pipe(browserSync.reload({stream: true}));
 });
 
-// Minify
-gulp.task('minify', function(){
+// JS Minify
+gulp.task('jsminify', function(){
   if(setting.minify.js){
     return gulp.src(setting.path.js.dest+'**/*.js')
       .pipe($.uglify())
       .pipe(gulp.dest(setting.path.js.dest));
   }
+});
 
+// CSS Minify
+gulp.task('cssminify', function(){
   if(setting.minify.css){
     return gulp.src(setting.path.sass.dest+'**/*.css')
       .pipe($.csso())
       .pipe(gulp.dest(setting.path.sass.dest));
-  }else{
+  }
+});
+
+// CSS Beautify
+gulp.task('cssbeautify', function(){
+  if(!setting.cssbeautify.disabled && !setting.minify.css){
     return gulp.src(setting.path.sass.dest+'**/*.css')
       .pipe($.cssbeautify(setting.cssbeautify.options))
+      .pipe(gulp.dest(setting.path.sass.dest));
+  }
+});
+
+// CSS Comb
+gulp.task('csscomb', function(){
+  if(!setting.csscomb.disabled && !setting.minify.css){
+    return gulp.src(setting.path.sass.dest+'**/*.css')
+      .pipe($.csscomb())
       .pipe(gulp.dest(setting.path.sass.dest));
   }
 });
@@ -178,9 +199,10 @@ gulp.task('clean', del.bind(null, setting.path.base.dest));
 // Build
 gulp.task('build', function(){
   return runSequence(
-    'clean',
+    ['clean'],
     ['html', 'js', 'scss', 'lib', 'include', 'etc'],
-    ['imagemin', 'minify']
+    ['csscomb'],
+    ['imagemin', 'cssminify', 'jsminify', 'cssbeautify']
     );
 });
 

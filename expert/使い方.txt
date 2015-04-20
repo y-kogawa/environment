@@ -11,27 +11,48 @@ package.jsonがあるフォルダで[「]Shift+右クリック]→[コマンドウィンドウでここを開
 コマンドプロンプトを開、 npm install gulp -g と打ち込んでください。
 
 ３．コマンド
-gulp build: srcフォルダを元にコンパイルしたファイルをhttpdocsフォルダに出力する。
-　　　　　　　　　　すでにhttpdocsがある場合は一度削除するため、httpdocsに直接ファイルを置かないように気をつける。
-　　　　　　　　　　jsとcssをミニファイするため、サーバにアップする前に使用する。
+gulp clean      : httpdocs を削除する。
 
-gulp      : httpdocsフォルダをルートにWebサーバを立ち上げる。
-　　　　　　　　　　ローカルとイントラネット内で確認できるAccess URLsを発行してくれる。
-　　　　　　　　　　PHPを使用する場合は、setting.browserSync.serverをコメントアウトし、
-　　　　　　　　　　setting.browserSync.proxyにxamppで作成したローカルテスト環境のドメインを指定する。
+gulp imagemin   : src/assets/img/ の中にある画像ファイルを圧縮して httpdocs に書き出す。
+                  デフォルトでは無効にしているので、使用する際は setting.imagemin.disable を false にする。
+
+gulp cssminify  : httpdocs/assets/css/ の中にある .css ファイルをミニファイして上書きする。
+                  デフォルトでは無効にしているので、使用する際はsetting.minify.cssを true にする。
+
+gulp jsminify   : httpdocs/assets/js/ の中にある .js ファイルをミニファイして上書きする。
+                  デフォルトでは無効にしているので、使用する際はsetting.minify.jsを true にする。
+
+gulp cssbeautify: httpdocs/assets/css/ の中にある .css ファイルのコードを整形して上書きする。
+                  デフォルトでは無効にしているので、使用する際は setting.cssbeautify.disabled を false にする。
+                  cssminify が有効な場合は使用できない。
+
+gulp csscomb    : httpdocs/assets/css/ の中にある .css ファイルのCSSプロパティをソートして上書きする。
+                  デフォルトでは無効にしているので、使用する際は setting.csscomb.disabled を false にする。
+                  cssminify が有効な場合は使用できない。
+
+gulp build      : src　フォルダを元にコンパイルしたファイルを　httpdocs　フォルダに出力する。
+                  すでに　httpdocs　がある場合は一度削除するため、httpdocs　に直接ファイルを置かないように気をつける。
+                  上記で紹介しているコマンドを一括で実行する
+
+gulp            : httpdocsフォルダをルートにWebサーバを立ち上げる。
+                  ローカルとイントラネット内で確認できるAccess URLsを発行してくれる。
+                  PHPを使用する場合は、setting.browserSync.server をコメントアウトし、
+                  setting.browserSync.proxyにxamppで作成したローカルテスト環境のドメインを指定する。
 
 ４．その他
 ・gulpfile.jsで何を行っているのか、package.jsonにあるモジュールは何がかを事前に把握して使用してください。
-・gulpfile.jsの中にあるsetting変数で設定の変更ができます。
+・gulpfile.jsの中にある setting 変数で各種設定の変更ができます。
 
 ■主な機能
 gulp-browserSync : gulpコマンドで立ち上げたWebサーバへのAccess URLにアクセスしているブラウザの挙動（スクロールやリロードなど）を同期する。
-　　　　　　　　　　　　　　　 xxx:3001 にアクセスすることで同期する挙動の制御などができる。
+                   xxx:3001 にアクセスすることで同期する挙動の制御などができる。
 gulp-sass        : scssファイルのコンパイル
 gulp-imagemin    : 画像ファイルの圧縮（デフォルトでは無効）
 gulp-autoprefixer: ベンダープレフィックスの付与
-gulp-minify-css  : CSSファイルのミニファイ（デフォルトでは無効）
-gulp-uglify      : JSファイルのミニファイ（デフォルトでは無効）
+gulp-minify-css  : CSSコードのミニファイ（デフォルトでは無効）
+gulp-uglify      : JSコードのミニファイ（デフォルトでは無効）
+gulp-csscomb     : CSSプロパティのソート（デフォルトでは無効）
+gulp-cssbeautify : CSSコードの整形（デフォルトでは無効）
 
 ■ディレクトリルール
 src     : 開発用のデータを入れるフォルダ。このフォルダに全てのデータを格納するようにする。
