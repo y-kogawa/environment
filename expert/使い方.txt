@@ -35,7 +35,7 @@ gulp csscomb    : httpdocs/assets/css/ の中にある .css ファイルのCSSプロパティを
 
 gulp build      : src　フォルダを元にコンパイルしたファイルを　httpdocs　フォルダに出力する。
                   すでに　httpdocs　がある場合は一度削除するため、httpdocs　に直接ファイルを置かないように気をつける。
-                  上記で紹介しているコマンドを一括で実行する
+                  上記で紹介しているコマンドを一括で実行する。
 
 gulp            : httpdocsフォルダをルートにWebサーバを立ち上げる。
                   ローカルとイントラネット内で確認できるAccess URLsを発行してくれる。

@@ -50,10 +50,6 @@ var setting = {
       src: 'src/assets/img/**/*',
       dest: 'httpdocs/assets/img/'
     },
-    js: {
-      src: 'src/assets/js/**/*',
-      dest: 'httpdocs/assets/js/'
-    },
     lib: {
       src: 'src/assets/lib/**/*',
       dest: 'httpdocs/assets/lib/',
