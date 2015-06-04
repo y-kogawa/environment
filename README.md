@@ -18,6 +18,10 @@ npm install と入力・実行してください。node_modules というフォ�
 ## コマンド
 gulp clean      : httpdocs を削除する。
 
+gulp sass       : src/assets/sass/ の中にある .sassファイルをcssファイルにコンパイルして httpdocs に書き出す。
+
+gulp ejs        : src/ の中にある.ejsファイルをhtmlファイルにコンパイルして httpdocs に書き出す。
+
 gulp imagemin   : src/assets/img/ の中にある画像ファイルを圧縮して httpdocs に書き出す。
                   デフォルトでは無効にしているので、使用する際は setting.imagemin.disable を false にする。
 
@@ -35,8 +39,8 @@ gulp csscomb    : httpdocs/assets/css/ の中にある .css ファイルのCSS�
                   デフォルトでは無効にしているので、使用する際は setting.csscomb.disabled を false にする。
                   cssminify が有効な場合は使用できない。
 
-gulp build      : src　フォルダを元にコンパイルしたファイルを　httpdocs　フォルダに出力する。
-                  すでに　httpdocs　がある場合は一度削除するため、httpdocs　に直接ファイルを置かないように気をつける。
+gulp build      : src フォルダを元にコンパイルしたファイルを httpdocs フォルダに出力する。
+                  すでに httpdocs がある場合は一度削除するため、httpdocs に直接ファイルを置かないように気をつける。
                   上記で紹介しているコマンドを一括で実行する。
 
 gulp            : httpdocsフォルダをルートにWebサーバを立ち上げる。
@@ -54,6 +58,7 @@ gulp-minify-css  : CSSコードのミニファイ（デフォルトでは無効�
 gulp-uglify      : JSコードのミニファイ（デフォルトでは無効）
 gulp-csscomb     : CSSプロパティのソート（デフォルトでは無効）
 gulp-cssbeautify : CSSコードの整形（デフォルトでは無効）
+gulp-ejs         : HTMLのテンプレートエンジン
 
 ##ディレクトリルール
 src     : 開発用のデータを入れるフォルダ。このフォルダに全てのデータを格納するようにする。
@@ -69,7 +74,7 @@ src
 ┃┠include - includeするファイル
 ┃┗etc     - 上記に含まれないもの全て
 ┠sitemap.xml
-┗index.html|.php
+┗index.html|.php|.ejs
 ----------------------------------
 ※外部ファイルは全てassetsフォルダに入れる。
 ※上記のフォルダ以外のフォルダに入ったファイルは全てコピーされます。
