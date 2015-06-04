@@ -48,22 +48,26 @@ var setting = {
     },
     image: {
       src: 'src/assets/img/**/*',
-      dest: 'httpdocs/assets/img/'
+      dest: 'httpdocs/assets/img/',
     },
     lib: {
       src: 'src/assets/lib/**/*',
       dest: 'httpdocs/assets/lib/',
     },
     include: {
-      src: 'src/assets/include/**/*',
+      src: ['src/assets/include/**/*', '!src/assets/include/**/_*.ejs'],
       dest: 'httpdocs/assets/include/',
     },
     etc: {
       src: 'src/assets/etc/**/*',
       dest: 'httpdocs/assets/etc/',
     },
+    ejs: {
+      watch: 'src/**/*.ejs',
+      src: ['src/**/*.ejs', '!src/**/_*.ejs']
+    },
     html: {
-      src: ['src/**/*', '!src/assets/**/*']
+      src: ['src/**/*', '!src/assets/**/*', '!src/**/*.ejs']
     },
   }
 };
@@ -100,6 +104,16 @@ gulp.task('scss',function(){
     .pipe($.autoprefixer(setting.autoprefixer.browser))
     .pipe(gulp.dest(setting.path.sass.dest))
     .pipe(browserSync.reload({stream: true}));
+});
+
+// EJS
+gulp.task('ejs', function(){
+  return gulp.src(
+    setting.path.ejs.src
+  )
+  .pipe($.ejs())
+  .pipe(gulp.dest(setting.path.base.dest))
+  .pipe(browserSync.reload({stream: true}));
 });
 
 // HTML
@@ -207,6 +221,7 @@ gulp.task('watch', function(){
   browserSync.init(setting.browserSync);
 
   gulp.watch([setting.path.sass.src], ['scss']);
+  gulp.watch([setting.path.ejs.watch], ['ejs']);
   gulp.watch([setting.path.js.src], ['js']);
   gulp.watch([setting.path.lib.src], ['lib']);
   gulp.watch([setting.path.include.src], ['include']);
