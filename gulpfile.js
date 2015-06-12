@@ -210,7 +210,7 @@ gulp.task('clean', del.bind(null, setting.path.base.dest));
 gulp.task('build', function(){
   return runSequence(
     ['clean'],
-    ['html', 'js', 'scss', 'lib', 'include', 'etc'],
+    ['html', 'ejs', 'js', 'scss', 'lib', 'include', 'etc'],
     ['csscomb'],
     ['imagemin', 'cssminify', 'jsminify', 'cssbeautify']
     );
