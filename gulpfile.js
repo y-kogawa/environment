@@ -80,6 +80,9 @@ gulp.task('imagemin', function(){
     };
 
     return gulp.src(setting.path.image.src)
+      .pipe($.plumber({
+        errorHandler: $.notify.onError("Error: <%= error.message %>") //<-
+      }))
       .pipe($.changed(setting.path.image.dest))
       .pipe($.imagemin(imageminOptions))
       .pipe(gulp.dest(setting.path.image.dest))
@@ -88,6 +91,9 @@ gulp.task('imagemin', function(){
     return gulp.src(
         setting.path.image.src
       )
+      .pipe($.plumber({
+        errorHandler: $.notify.onError("Error: <%= error.message %>") //<-
+      }))
       .pipe($.changed(setting.path.image.dest))
       .pipe(gulp.dest(setting.path.image.dest))
       .pipe(browserSync.reload({stream: true}));
@@ -109,68 +115,89 @@ gulp.task('scss',function(){
 // EJS
 gulp.task('ejs', function(){
   return gulp.src(
-    setting.path.ejs.src
-  )
-  .pipe($.ejs())
-  .pipe(gulp.dest(setting.path.base.dest))
-  .pipe(browserSync.reload({stream: true}));
+      setting.path.ejs.src
+    )
+    .pipe($.plumber({
+      errorHandler: $.notify.onError("Error: <%= error.message %>") //<-
+    }))
+    .pipe($.ejs())
+    .pipe(gulp.dest(setting.path.base.dest))
+    .pipe(browserSync.reload({stream: true}));
 });
 
 // HTML
 gulp.task('html', function(){
   return gulp.src(
-    setting.path.html.src,
-    {base: setting.path.base.src}
-  )
-  .pipe($.changed(setting.path.base.dest))
-  .pipe(gulp.dest(setting.path.base.dest))
-  .pipe(browserSync.reload({stream: true}));
+      setting.path.html.src,
+      {base: setting.path.base.src}
+    )
+    .pipe($.plumber({
+      errorHandler: $.notify.onError("Error: <%= error.message %>") //<-
+    }))
+    .pipe($.changed(setting.path.base.dest))
+    .pipe(gulp.dest(setting.path.base.dest))
+    .pipe(browserSync.reload({stream: true}));
 });
 
 // JavaScript
 gulp.task('js', function(){
   return gulp.src(
-    setting.path.js.src
-  )
-  .pipe($.changed(setting.path.js.dest))
-  .pipe(gulp.dest(setting.path.js.dest))
-  .pipe(browserSync.reload({stream: true}));
+      setting.path.js.src
+    )
+    .pipe($.plumber({
+      errorHandler: $.notify.onError("Error: <%= error.message %>") //<-
+    }))
+    .pipe($.changed(setting.path.js.dest))
+    .pipe(gulp.dest(setting.path.js.dest))
+    .pipe(browserSync.reload({stream: true}));
 });
 
 // Lib
 gulp.task('lib', function(){
   return gulp.src(
-    setting.path.lib.src
-  )
-  .pipe($.changed(setting.path.lib.dest))
-  .pipe(gulp.dest(setting.path.lib.dest))
-  .pipe(browserSync.reload({stream: true}));
+      setting.path.lib.src
+    )
+    .pipe($.plumber({
+      errorHandler: $.notify.onError("Error: <%= error.message %>") //<-
+    }))
+    .pipe($.changed(setting.path.lib.dest))
+    .pipe(gulp.dest(setting.path.lib.dest))
+    .pipe(browserSync.reload({stream: true}));
 });
 
 // Include
 gulp.task('include', function(){
   return gulp.src(
-    setting.path.include.src
-  )
-  .pipe($.changed(setting.path.include.dest))
-  .pipe(gulp.dest(setting.path.include.dest))
-  .pipe(browserSync.reload({stream: true}));
+      setting.path.include.src
+    )
+    .pipe($.plumber({
+      errorHandler: $.notify.onError("Error: <%= error.message %>") //<-
+    }))
+    .pipe($.changed(setting.path.include.dest))
+    .pipe(gulp.dest(setting.path.include.dest))
+    .pipe(browserSync.reload({stream: true}));
 });
 
 // Etc
 gulp.task('etc', function(){
   return gulp.src(
-    setting.path.etc.src
-  )
-  .pipe($.changed(setting.path.etc.dest))
-  .pipe(gulp.dest(setting.path.etc.dest))
-  .pipe(browserSync.reload({stream: true}));
+      setting.path.etc.src
+    )
+    .pipe($.plumber({
+      errorHandler: $.notify.onError("Error: <%= error.message %>") //<-
+    }))
+    .pipe($.changed(setting.path.etc.dest))
+    .pipe(gulp.dest(setting.path.etc.dest))
+    .pipe(browserSync.reload({stream: true}));
 });
 
 // JS Minify
 gulp.task('jsminify', function(){
   if(setting.minify.js){
     return gulp.src(setting.path.js.dest+'**/*.js')
+      .pipe($.plumber({
+        errorHandler: $.notify.onError("Error: <%= error.message %>") //<-
+      }))
       .pipe($.uglify())
       .pipe(gulp.dest(setting.path.js.dest));
   }
@@ -180,6 +207,9 @@ gulp.task('jsminify', function(){
 gulp.task('cssminify', function(){
   if(setting.minify.css){
     return gulp.src(setting.path.sass.dest+'**/*.css')
+      .pipe($.plumber({
+        errorHandler: $.notify.onError("Error: <%= error.message %>") //<-
+      }))
       .pipe($.csso())
       .pipe(gulp.dest(setting.path.sass.dest));
   }
@@ -189,6 +219,9 @@ gulp.task('cssminify', function(){
 gulp.task('cssbeautify', function(){
   if(!setting.cssbeautify.disabled && !setting.minify.css){
     return gulp.src(setting.path.sass.dest+'**/*.css')
+      .pipe($.plumber({
+        errorHandler: $.notify.onError("Error: <%= error.message %>") //<-
+      }))
       .pipe($.cssbeautify(setting.cssbeautify.options))
       .pipe(gulp.dest(setting.path.sass.dest));
   }
@@ -198,6 +231,9 @@ gulp.task('cssbeautify', function(){
 gulp.task('csscomb', function(){
   if(!setting.csscomb.disabled && !setting.minify.css){
     return gulp.src(setting.path.sass.dest+'**/*.css')
+      .pipe($.plumber({
+        errorHandler: $.notify.onError("Error: <%= error.message %>") //<-
+      }))
       .pipe($.csscomb())
       .pipe(gulp.dest(setting.path.sass.dest));
   }
