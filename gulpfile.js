@@ -27,7 +27,7 @@ var setting = {
   cssbeautify: {
     disabled: true,
     options: {
-      indent: '	'
+      indent: ''
     }
   },
   csscomb: {
@@ -76,6 +76,9 @@ gulp.task('imagemin', function(){
     };
 
     return gulp.src(setting.path.image.src)
+      .pipe($.plumber({
+        errorHandler: $.notify.onError("Error: <%= error.message %>") //<-
+      }))
       .pipe($.changed(setting.path.image.dest))
       .pipe($.imagemin(imageminOptions))
       .pipe(gulp.dest(setting.path.image.dest))
@@ -84,6 +87,9 @@ gulp.task('imagemin', function(){
     return gulp.src(
         setting.path.image.src
       )
+      .pipe($.plumber({
+        errorHandler: $.notify.onError("Error: <%= error.message %>") //<-
+      }))
       .pipe($.changed(setting.path.image.dest))
       .pipe(gulp.dest(setting.path.image.dest))
       .pipe(browserSync.reload({stream: true}));
@@ -99,19 +105,6 @@ gulp.task('scss',function(){
     .pipe($.sass())
     .pipe($.autoprefixer(setting.autoprefixer.browser))
     .pipe(gulp.dest(setting.path.sass.dest))
-    .pipe(browserSync.reload({stream: true}));
-});
-
-// EJS
-gulp.task('ejs', function(){
-  return gulp.src(
-      setting.path.ejs.src
-    )
-    .pipe($.plumber({
-      errorHandler: $.notify.onError("Error: <%= error.message %>") //<-
-    }))
-    .pipe($.ejs())
-    .pipe(gulp.dest(setting.path.base.dest))
     .pipe(browserSync.reload({stream: true}));
 });
 
